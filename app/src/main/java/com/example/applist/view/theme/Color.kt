@@ -1,4 +1,4 @@
-package com.example.applist.ui.theme
+package com.example.applist.view.theme
 
 import androidx.compose.ui.graphics.Color
 
