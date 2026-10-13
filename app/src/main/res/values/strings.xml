@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AppList</string>
+    <string name="icon">Иконка</string>
+    <string name="app">Приложение</string>
+
+    <string name="category_app">Приложения</string>
+    <string name="category_game">Игры</string>
+    <string name="category_social">Социальные сети</string>
+    <string name="category_education">Образование</string>
+    <string name="category_entertainment">Развлечения</string>
+    <string name="category_music">Музыка</string>
+    <string name="category_video">Видео</string>
+
+    <string name="app_with_name">%1$s %2$s</string>
 </resources>
