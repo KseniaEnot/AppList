@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.applist.view.theme.AppListTheme
-import com.example.applist.view.appList.AppListScreen
-import com.example.applist.view.appList.getTestAppsList
+import com.example.applist.controller.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppListTheme {
-                AppListScreen(getTestAppsList())
+                AppNavHost()
             }
         }
     }

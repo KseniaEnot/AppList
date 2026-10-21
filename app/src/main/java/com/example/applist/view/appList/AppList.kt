@@ -35,7 +35,7 @@ fun AppList(appDetailList: List<AppDetails>,
             {
                 AsyncImage(
                     app.iconUrl,
-                    stringResource(R.string.icon)+" "+app.name,
+                    stringResource(R.string.app_with_name, stringResource(R.string.icon), app.name),
                     Modifier.size(56.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     contentScale = ContentScale.Crop
@@ -44,7 +44,8 @@ fun AppList(appDetailList: List<AppDetails>,
                 Column{
                     Text(app.name)
                     Text(stringResource(getCategoryText(app.category)))
-                    Text(app.description)
+                    Text(app.description,
+                        maxLines = 2)
                 }
             }
         }
@@ -52,7 +53,7 @@ fun AppList(appDetailList: List<AppDetails>,
 }
 
 @Composable
-private fun getCategoryText(category: Category): Int = when (category) {
+fun getCategoryText(category: Category): Int = when (category) {
     Category.APP -> R.string.category_app
     Category.GAME -> R.string.category_game
     Category.SOCIAL -> R.string.category_social
