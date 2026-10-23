@@ -1,4 +1,4 @@
-package com.example.applist.controller
+package com.example.applist.model.navigation
 
 import kotlinx.serialization.Serializable
 
