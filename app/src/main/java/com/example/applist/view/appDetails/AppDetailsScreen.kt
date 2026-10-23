@@ -6,18 +6,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.applist.controller.getSimilarApps
 import com.example.applist.model.appDetails.AppDetails
 import com.example.applist.view.SimilarApp.SimilarApps
 import com.example.applist.view.appList.ToolBar
 
 @Composable
 fun AppDetailsScreen(appDetails: AppDetails,
+                     similarApps : List<AppDetails>?,
                      onBack: () -> Unit,
                      onOpenAppDetails : (AppDetails) -> Unit,
                      onSimilarAppDownloadClick: (AppDetails) -> Unit,
@@ -31,7 +33,8 @@ fun AppDetailsScreen(appDetails: AppDetails,
         innerPadding ->
         Column(
             //verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = modifier.padding(innerPadding))
+            modifier = modifier.padding(innerPadding).verticalScroll(rememberScrollState())
+        )
         {
             ToolBar(
                 onBack,
@@ -46,8 +49,7 @@ fun AppDetailsScreen(appDetails: AppDetails,
             )
             Spacer(Modifier.height(8.dp))
 
-            val similarApps = getSimilarApps(appDetails)
-            if (similarApps.isNotEmpty()) {
+            if (!similarApps.isNullOrEmpty()) {
                 SimilarApps(
                     similarAppsList = similarApps,
                     onDownloadClick = onSimilarAppDownloadClick,

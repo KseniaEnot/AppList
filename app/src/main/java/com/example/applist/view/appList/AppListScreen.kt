@@ -36,7 +36,8 @@ fun AppListScreen(
                 { onAppClick(it) },
                 Modifier
                     .background(MaterialTheme.colorScheme.secondary)
-                    .padding(10.dp))
+                    .padding(10.dp)
+                    .fillMaxWidth())
         }
     }
 }
