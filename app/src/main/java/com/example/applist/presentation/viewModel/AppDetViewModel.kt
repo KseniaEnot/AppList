@@ -2,20 +2,20 @@ package com.example.applist.presentation.viewModel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.applist.domain.model.appDetails.AppDetails
 import com.example.applist.domain.repository.AppDetailsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AppDetViewModel(
-    savedStateHandle: SavedStateHandle,
-    private val repository: AppDetailsRepository
+@HiltViewModel
+class AppDetViewModel @Inject constructor(
+    private val repository: AppDetailsRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val appId: String = checkNotNull(savedStateHandle["appId"])
@@ -28,26 +28,27 @@ class AppDetViewModel(
     val uiState: StateFlow<AppDetailsUiState> = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            val all = repository.getAppsList()
-            val app = all.firstOrNull { it.id == appId }
-            if (app != null) {
-                _uiState.value =
-                    AppDetailsUiState(
-                        app = app,
-                        similarApps = repository.getSimAppsList(app),
-                        isLoading = false
-                    )
-            }
-        }
+        load()
     }
 
-    companion object {
-        fun factory(repository: AppDetailsRepository) = viewModelFactory {
-            initializer {
-                AppDetViewModel(
-                    savedStateHandle = createSavedStateHandle(),
-                    repository = repository
+    private fun load() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            runCatching {
+                val all = repository.getAppsList()
+                val app = all.firstOrNull { it.id == appId }
+                    ?: error("Приложение не найдено")
+                app to repository.getSimAppsList(app)
+            }.onSuccess { (app, similar) ->
+                _uiState.value = AppDetailsUiState(
+                    isLoading = false,
+                    app = app,
+                    similarApps = similar
+                )
+            }.onFailure { e ->
+                _uiState.value = AppDetailsUiState(
+                    isLoading = false,
+                    error = e.message ?: "Не удалось загрузить приложение"
                 )
             }
         }
@@ -57,5 +58,6 @@ class AppDetViewModel(
 data class AppDetailsUiState(
     val isLoading: Boolean = false,
     val app: AppDetails? = null,
-    val similarApps: List<AppDetails> = emptyList()
+    val similarApps: List<AppDetails> = emptyList(),
+    val error: String? = null
 )

@@ -4,8 +4,9 @@ import com.example.applist.data.mapper.toDomain
 import com.example.applist.data.source.AppDetailsLocalDataSource
 import com.example.applist.domain.model.appDetails.AppDetails
 import com.example.applist.domain.repository.AppDetailsRepository
+import javax.inject.Inject
 
-class AppDetailsRepositoryImpl(
+class AppDetailsRepositoryImpl @Inject constructor(
     private val localDataSource: AppDetailsLocalDataSource
 ) : AppDetailsRepository {
     override suspend fun getAppsList(): List<AppDetails> {

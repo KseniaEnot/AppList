@@ -2,16 +2,17 @@ package com.example.applist.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.applist.domain.model.appDetails.AppDetails
 import com.example.applist.domain.repository.AppDetailsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AppListViewModel(
+@HiltViewModel
+class AppListViewModel @Inject constructor(
     private val repository: AppDetailsRepository
 ) : ViewModel() {
 
@@ -31,16 +32,6 @@ class AppListViewModel(
                     apps = apps,
                     isLoading = false
                 )
-        }
-    }
-
-    companion object {
-        fun factory(repository: AppDetailsRepository) = viewModelFactory {
-            initializer {
-                AppListViewModel(
-                    repository
-                )
-            }
         }
     }
 }
