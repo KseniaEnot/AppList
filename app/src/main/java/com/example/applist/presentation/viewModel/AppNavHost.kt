@@ -26,14 +26,24 @@ fun AppNavHost() {
             val vm: AppListViewModel = hiltViewModel()
             val state by vm.uiState.collectAsState()
 
-            AppListScreen(
-                appDetailList = state.apps,
-                onAppClick = { app ->
-                    navController.navigate(AppDetailsRoute(app.id))
-                },
-                onBack = { navController.popBackStack() },
-                onSearch = {},
-            )
+            when {
+                state.isLoading -> LoadingScreen()
+
+                state.error != null -> ErrorScreen(
+                    message = state.error ?: "Не удалось загрузить каталог",
+                    onBack = { navController.popBackStack() },
+                    onRetry = vm::loadApps
+                )
+
+                else -> AppListScreen(
+                    appDetailList = state.apps,
+                    onAppClick = { app ->
+                        navController.navigate(AppDetailsRoute(app.id))
+                    },
+                    onBack = { navController.popBackStack() },
+                    onSearch = {},
+                )
+            }
         }
 
         composable<AppDetailsRoute> {

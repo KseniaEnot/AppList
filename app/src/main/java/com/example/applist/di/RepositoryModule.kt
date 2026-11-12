@@ -1,6 +1,6 @@
 package com.example.applist.di
 
-import com.example.applist.data.repository.AppDetailsRepositoryImpl
+import com.example.applist.data.repository.AppDetailsNetRepositoryImpl
 import com.example.applist.domain.repository.AppDetailsRepository
 import dagger.Binds
 import dagger.Module
@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAppDetailsRepository(
-        impl: AppDetailsRepositoryImpl
+        impl: AppDetailsNetRepositoryImpl //AppDetailsRepositoryImpl
     ): AppDetailsRepository
 }

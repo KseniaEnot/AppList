@@ -7,5 +7,6 @@ enum class Category {
     EDUCATION,
     ENTERTAINMENT,
     MUSIC,
-    VIDEO
+    VIDEO,
+    SPORT
 }
