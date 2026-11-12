@@ -65,4 +65,6 @@ fun getCategoryText(category: Category): Int = when (category) {
     Category.ENTERTAINMENT -> R.string.category_entertainment
     Category.MUSIC -> R.string.category_music
     Category.VIDEO -> R.string.category_video
+    Category.SPORT -> R.string.category_sport
+    //else -> R.string.category_other
 }

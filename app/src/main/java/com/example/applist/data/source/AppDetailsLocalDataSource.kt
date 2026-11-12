@@ -3,7 +3,7 @@ package com.example.applist.data.source
 import com.example.applist.data.dto.AppDetailsDto
 import com.example.applist.data.dto.CategoryDto
 
-class AppDetailsLocalDataSource {
+/*class AppDetailsLocalDataSource {
     private val testApps = listOf(
         AppDetailsDto(
             "1",
@@ -93,4 +93,4 @@ class AppDetailsLocalDataSource {
         return testApps
     }
 
-}
+}*/
